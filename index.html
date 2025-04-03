@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <title>Presupuesto de Dibujos</title>
+</head>
+<body>
+  <div class="container">
+    <!-- Selector de idiomas y modo oscuro (ahora dentro del contenedor) -->
+    <div class="top-controls">
+      <div class="theme-toggle">
+        <button id="theme-toggle-btn" aria-label="Cambiar tema">
+          <i class="fas fa-sun"></i>
+        </button>
+      </div>
+      <div class="language-selector">
+        <div class="language-selector-container">
+          <div class="current-language" id="current-language">
+            <img src="https://flagcdn.com/w20/es.png" alt="Español" class="flag-icon" />
+            <span>Español</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="language-dropdown" id="language-dropdown">
+            <div class="language-option" data-lang="es">
+              <img src="https://flagcdn.com/w20/es.png" alt="Español" class="flag-icon" />
+              <span>Español</span>
+            </div>
+            <div class="language-option" data-lang="en">
+              <img src="https://flagcdn.com/w20/gb.png" alt="English" class="flag-icon" />
+              <span>English</span>
+            </div>
+            <div class="language-option" data-lang="fr">
+              <img src="https://flagcdn.com/w20/fr.png" alt="Français" class="flag-icon" />
+              <span>Français</span>
+            </div>
+            <div class="language-option" data-lang="pt">
+              <img src="https://flagcdn.com/w20/br.png" alt="Português" class="flag-icon" />
+              <span>Português</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="header">
+      <div class="logo">
+        <i class="fas fa-paint-brush"></i>
+      </div>
+      <h1 data-translate="title">Calculadora de Presupuesto</h1>
+      <p class="subtitle" data-translate="subtitle">Dibujos y Arte Digital</p>
+    </div>
+
+    <form id="quoteForm">
+      <div class="form-section">
+        <div class="section-header">
+          <i class="fas fa-dollar-sign"></i>
+          <h2 data-translate="basic_info">Información Básica</h2>
+        </div>
+        
+        <div class="form-group">
+          <label for="basePrice" data-translate="base_price_label">Precio Base (<span id="currency-label">MXN</span>):</label>
+          <input type="number" id="basePrice" placeholder="Automático si se deja vacío" data-translate-placeholder="base_price_placeholder" />
+          <small data-translate="base_price_help">Deja vacío para calcular automáticamente según el tipo de ilustración</small>
+        </div>
+
+        <div class="form-group">
+          <label for="currency" data-translate="currency_label">Divisa:</label>
+          <div class="select-wrapper">
+            <select id="currency" required>
+              <option value="MXN" selected data-translate="currency_mxn">Peso Mexicano (MXN)</option>
+              <option value="USD" data-translate="currency_usd">Dólar Estadounidense (USD)</option>
+              <option value="EUR" data-translate="currency_eur">Euro (EUR)</option>
+              <option value="GBP" data-translate="currency_gbp">Libra Esterlina (GBP)</option>
+              <option value="CAD" data-translate="currency_cad">Dólar Canadiense (CAD)</option>
+              <option value="ARS" data-translate="currency_ars">Peso Argentino (ARS)</option>
+              <option value="CLP" data-translate="currency_clp">Peso Chileno (CLP)</option>
+              <option value="COP" data-translate="currency_cop">Peso Colombiano (COP)</option>
+            </select>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <small data-translate="currency_help">Los precios base están en MXN y se convertirán a la divisa seleccionada</small>
+        </div>
+
+        <div class="form-group">
+          <label for="type" data-translate="illustration_type_label">Tipo de Ilustración:</label>
+          <div class="select-wrapper">
+            <select id="type" required>
+              <option value="retrato" data-translate="illustration_portrait">Retrato</option>
+              <option value="personaje" data-translate="illustration_character">Personaje</option>
+              <option value="fondo" data-translate="illustration_background">Fondo</option>
+              <option value="concept_art" data-translate="illustration_concept">Concept Art</option>
+            </select>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-header">
+          <i class="fas fa-sliders-h"></i>
+          <h2 data-translate="project_details">Detalles del Proyecto</h2>
+        </div>
+        
+        <div class="form-group">
+          <label for="detail" data-translate="detail_level_label">Nivel de Detalle:</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="detail-simple" name="detail" value="simple" checked />
+              <label for="detail-simple" data-translate="detail_simple">Simple</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="detail-medio" name="detail" value="medio" />
+              <label for="detail-medio" data-translate="detail_medium">Medio</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="detail-complejo" name="detail" value="complejo" />
+              <label for="detail-complejo" data-translate="detail_complex">Complejo</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="characters" data-translate="characters_label">Número de Personajes:</label>
+          <div class="number-input">
+            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepDown()">-</button>
+            <input type="number" id="characters" min="1" value="1" required />
+            <button type="button" onclick="this.parentNode.querySelector('input[type=number]').stepUp()">+</button>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="background" data-translate="background_type_label">Tipo de Fondo:</label>
+          <div class="toggle-switch">
+            <input type="checkbox" id="background-toggle" class="toggle-input" />
+            <label for="background-toggle" class="toggle-label"></label>
+            <span class="toggle-text" id="background-text" data-translate="background_simple">Simple</span>
+            <input type="hidden" id="background" value="simple" />
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="section-header">
+          <i class="fas fa-file-contract"></i>
+          <h2 data-translate="terms_conditions">Términos y Condiciones</h2>
+        </div>
+        
+        <div class="form-group">
+          <label for="rights" data-translate="rights_label">Derechos de Uso:</label>
+          <div class="select-wrapper">
+            <select id="rights" required>
+              <option value="true" data-translate="rights_personal">Uso Personal</option>
+              <option value="false" data-translate="rights_none">Sin Derechos (10% descuento)</option>
+              <option value="comercial" data-translate="rights_commercial">Uso Comercial</option>
+              <option value="exclusivo" data-translate="rights_exclusive">Derechos Exclusivos</option>
+            </select>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="urgency" data-translate="urgency_label">Entrega Rápida:</label>
+          <div class="toggle-switch">
+            <input type="checkbox" id="urgency-toggle" class="toggle-input" />
+            <label for="urgency-toggle" class="toggle-label"></label>
+            <span class="toggle-text" id="urgency-text" data-translate="no">No</span>
+            <input type="hidden" id="urgency" value="false" />
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn">
+        <i class="fas fa-calculator"></i> <span data-translate="calculate_button">Calcular Presupuesto</span>
+      </button>
+    </form>
+
+    <div id="result-container" class="hidden">
+      <div class="result-card">
+        <div class="result-header">
+          <i class="fas fa-check-circle"></i>
+          <h2 data-translate="estimated_budget">Presupuesto Estimado</h2>
+        </div>
+        <div id="result" class="result-amount"></div>
+        <p class="result-note" data-translate="result_note">Este presupuesto es una estimación basada en los parámetros seleccionados.</p>
+        <div class="result-buttons">
+          <button type="button" id="recalculate-btn" class="secondary-btn">
+            <i class="fas fa-redo"></i> <span data-translate="recalculate_button">Recalcular</span>
+          </button>
+          <button type="button" id="print-btn" class="secondary-btn">
+            <i class="fas fa-print"></i> <span data-translate="print_button">Imprimir Resumen</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>© 2025 <span data-translate="footer_text">Calculadora de Presupuestos para Arte Digital</span></p>
+    <div class="footer-links">
+      <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-twitter"></i> <span data-translate="footer_twitter">Twitter</span>
+      </a>
+      <a href="https://facebook.com" target="_blank" rel="noopener noreferrer">
+        <i class="fab fa-facebook"></i> <span data-translate="footer_facebook">Facebook</span>
+      </a>
+      <a href="mailto:contacto@artepresupuesto.com">
+        <i class="fas fa-envelope"></i> <span data-translate="footer_contact">Contacto</span>
+      </a>
+    </div>
+  </footer>
+
+  <!-- Chatbot -->
+  <div class="chatbot-container">
+    <div class="chatbot-icon" id="chatbot-toggle">
+      <i class="fas fa-comment-dots"></i>
+      <span class="chatbot-notification">1</span>
+    </div>
+    
+    <div class="chatbot-box" id="chatbot-box">
+      <div class="chatbot-header">
+        <div class="chatbot-title">
+          <i class="fas fa-robot"></i>
+          <h3 data-translate="virtual_assistant">Asistente Virtual</h3>
+        </div>
+        <button class="chatbot-close" id="chatbot-close">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      
+      <div class="chatbot-messages" id="chatbot-messages">
+        <!-- Los mensajes se añadirán dinámicamente -->
+      </div>
+      
+      <div class="chatbot-input-container">
+        <input 
+          type="text" 
+          id="chatbot-input" 
+          class="chatbot-input" 
+          placeholder="Escribe tu pregunta aquí..."
+          data-translate-placeholder="chatbot_placeholder"
+        />
+        <button class="chatbot-send" id="chatbot-send">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor para la impresión (oculto) -->
+  <div id="print-container" class="print-only"></div>
+
+  <script src="script.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>
+
